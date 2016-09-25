@@ -1,24 +1,28 @@
 # vue-express-forum
 ## 基于vuejs,express,mogodb的多人论坛webapp
 
-### 启动应用:
+### start app:
 
-**安装依赖**
+**install dependencies& devDependencies**
 
 $ npm install
 
-**启动访问服务器**
+**start mongodb database server and listening at port 27017**
+
+> net start mongodb
+
+**start express server**
 
 $ set DEBUG=vue-express-forum & npm start
 
-**访问应用**
+**enjoy the app**
 
 localhost:3000/
 
-### 开发环境
+### development
 
 $ npm run dev
 
-### 生产
+### build
 
 $ npm run build
