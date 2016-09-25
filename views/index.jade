@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    div(id="app")
+    script.
+        window.user = !{JSON.stringify(user)};
+        window.posts = !{JSON.stringify(posts)}
+    script(src="/js/manifest.416d4d6ead1048dc0711.js")
+    script(src="/js/vendor.34c17374e4fb8199b968.js")
+    script(src="/js/app.141e18838497567346da.js")
