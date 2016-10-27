@@ -31,6 +31,8 @@
                         name:that.name,
                         password:that.password
                     }
+                }).done(function(res){
+                    localStorage.setItem("token",res.token);
                 });
             }
         }

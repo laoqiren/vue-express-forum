@@ -31,6 +31,10 @@
                         name:_this.name,
                         password:_this.password
                     }
+                }).done(function(res){
+                    console.log(res);
+                    localStorage.setItem("token",res.token);
+                    _this.user = res.user;
                 })
             }
         }

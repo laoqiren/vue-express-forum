@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
+var jwt = require("jwt-simple");
+//var app = require("../app");
 var User = require('../models/user');
 var checkLog = require('../middleware/checkLog');
 
@@ -19,8 +21,21 @@ router.post('/',checkLog,function(req,res,next){
             console.log('登录密码错误');
             //return res.redirect('/log');
         }
-        console.log('登录成功')
-        req.session.user = user;
+        var expires = moment().add(7,'days').valueOf();
+        var token = jwt.encode({
+            iss: user.name,
+            exp: expires
+        }, req.app.get('jwtTokenSecret'));
+        res.status(200);
+        res.json({
+            token : token,
+            expires: expires,
+            user:{
+                    name:user.name
+                }
+        });
+        console.log('登录成功');
+        //req.session.user = user;
         //res.redirect('/');
     })
 });

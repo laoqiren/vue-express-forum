@@ -29,6 +29,7 @@
                     type:'POST',
                     url:'/post',
                     data:{
+                        access_token:localStorage.getItem("token"),
                         title:_that.title,
                         content:_that.content
                     }

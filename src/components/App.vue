@@ -1,6 +1,6 @@
 <template>
   <div>
-    这是app
+    这是app,用户{{user.name}}
     <div>
       <ul>
         <li><a v-link="'/home'">home</a></li>
@@ -16,12 +16,28 @@
 
 <script>
   import Home from './Home.vue';
+  import $ from 'jquery';
   export default {
+    created(){
+      var token = localStorage.getItem("token");
+      var _this = this;
+      if(token){
+        $.ajax({
+          url:'http://localhost:3000/user',
+          type:'POST',
+          data:{
+            access_token:token
+          }
+        }).done(function(res){
+          console.log(res.user.name);
+          _this.user = res.user;
+        })
+      }
+    },
     data(){
       return {
-        user:user
+        user:undefined
       }
-     
     }
   }
 </script>
