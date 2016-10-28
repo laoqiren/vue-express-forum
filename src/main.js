@@ -4,6 +4,7 @@ import Home from './components/Home.vue';
 import Log from './components/Log.vue';
 import Post from './components/Post.vue';
 import Reg from './components/Reg.vue';
+import stylesheets from './assets/style/main.css';
 const VueRouter = require('vue-router');
 
 Vue.use(VueRouter);

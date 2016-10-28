@@ -6,10 +6,6 @@ var jwt = require("jwt-simple");
 //var app = require("../app");
 var User = require('../models/user');
 
-router.get('/',function(req,res,next){
-    
-    res.render("reg",{"title":"注册",user:req.session.user});
-});
 router.post('/',function(req,res,next){
     console.log('提交注册了');
     var name = req.body.name;

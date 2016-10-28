@@ -3,10 +3,10 @@ var router = express.Router();
 var crypto = require('crypto');
 var jwt = require("jwt-simple");
 //var app = require("../app");
+var moment = require('moment');
 var User = require('../models/user');
-var checkLog = require('../middleware/checkLog');
 
-router.post('/',checkLog,function(req,res,next){
+router.post('/',function(req,res,next){
     var name = req.body.name;
     var password = req.body.password;
     var md5 = crypto.createHash('md5');
@@ -14,11 +14,14 @@ router.post('/',checkLog,function(req,res,next){
     User.prototype.get(name,function(err,user){
         if(!user){
             console.log('用户不存在');
-            res.end({error:1});
+            res.status(500);
+            res.send({error:1});
             //return res.redirect('/log');
         }
         if(user.password !== password){
             console.log('登录密码错误');
+            res.status(500);
+            res.send({error:2});
             //return res.redirect('/log');
         }
         var expires = moment().add(7,'days').valueOf();

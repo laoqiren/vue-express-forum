@@ -46,9 +46,9 @@ Post.prototype.save = function(callback){
 };
 Post.get = function(callback) {
   //打开数据库
-  console.log("the database:"+mongodb);
   mongodb.open(function (err, db) {
     if (err) {
+      mongodb.close();
       return callback(err);
     }
     //读取 posts 集合
@@ -58,11 +58,8 @@ Post.get = function(callback) {
         return callback(err);
       }
       //根据 query 对象查询文章
-      collection.find().sort({
-        time: -1
-      }).toArray(function(err,docs) {
+      collection.find().toArray(function(err,docs) {
         mongodb.close();
-        console.log(callback);
         if (err) {
           return callback(err);//失败！返回 err
         }
@@ -71,25 +68,4 @@ Post.get = function(callback) {
     });
   });
 };
-/*
-Post.get = function(callback){
-    mongodb.open(function(err,db){
-        if(err){
-            console.log("打开数据库失败");
-            return callback(err);
-        }
-        db.collection("posts",function(err,collection){
-            if(err){
-                return callback(err);
-            }
-            collection.find().toArray(function(err,posts){
-                if(err){
-                    return callback(err);
-                }
-                return callback(null,posts);
-            });
-        });
-    });
-};
-*/
 module.exports = Post;

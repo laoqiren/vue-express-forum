@@ -1,13 +1,15 @@
 <template>
     <div>
         <form>
-            <label for="name">用户名
-                <input type="text" id="name" v-model="name"/>
-            </label>
-            <label for="key">密码
-                <input type="password" id="key" v-model="password"/>
-            </label>
-            <input type="button" value="登录" @click="handleLog"/>
+            <div class="form-group">
+                <label for="name">用户名
+                    <input type="text" id="name" class="form-control"  v-model="name"/>
+                </label>
+                <label for="key">密码
+                    <input type="password" class="form-control" id="key" v-model="password"/>
+                </label>
+                <input type="button" class="btn btn-block" value="登录" @click="handleLog"/>
+            </div>
         </form>
     </div>
 </template>
@@ -28,7 +30,7 @@
                         name:_this.name,
                         password:_this.password
                     });
-                fetch('/log',{
+                fetch('http://localhost:3000/log',{
                     method:'POST',
                     headers: {
                         "Content-Type": "application/json",

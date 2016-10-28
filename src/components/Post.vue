@@ -1,13 +1,14 @@
 <template>
     <div>
-        <form>
-            <label for="title">标题
-                <input type="text" id="title" v-model="title"/>
-            </label>
-            <label for="content">内容
-                <input type="textarea" id="content" v-model="content"/>
-            </label>
-            <input type="button" value="发表" @click="handlePost"/>
+        <form role="form">
+            <div class="form-group">
+                <label for="title">标题</label>
+                <input type="text" id="title" class="form-control" v-model="title"/>
+                <label for="content">内容
+                    <textarea rols=40 cols=40 id="content" class="form-control" v-model="content"></textarea>
+                </label>
+                <input type="button" value="发表" class="btn btn-block" @click="handlePost"/>
+            </div>
         </form>
     </div>
 </template>
@@ -24,16 +25,27 @@
         },
         methods:{
             handlePost(){
-                let _that = this;
-                $.ajax({
-                    type:'POST',
-                    url:'/post',
-                    data:{
+                let _this = this;
+                let content = JSON.stringify({
                         access_token:localStorage.getItem("token"),
-                        title:_that.title,
-                        content:_that.content
-                    }
-                })
+                        title:_this.title,
+                        content:_this.content
+                    });
+                fetch('http://localhost:3000/post',{
+                    method:'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Content-Length": content.length.toString(),
+                    },
+                    body: content
+                    }).then(function(res){
+                        if(res.ok){  
+                            _this.$router.go('/');
+                            window.location.reload();
+                        } else {
+                           console.log("发表文章失败")
+                        }
+                    });
             }
         }
     }
