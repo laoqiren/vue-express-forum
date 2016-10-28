@@ -24,18 +24,29 @@
         methods:{
             handleLog(){
                 let _this = this;
-                $.ajax({
-                    type:'POST',
-                    url:'/log',
-                    data:{
+                let content = JSON.stringify({
                         name:_this.name,
                         password:_this.password
-                    }
-                }).done(function(res){
-                    console.log(res);
-                    localStorage.setItem("token",res.token);
-                    _this.user = res.user;
-                })
+                    });
+                fetch('/log',{
+                    method:'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Content-Length": content.length.toString(),
+                    },
+                    body: content
+                    }).then(function(res){
+                        if(res.ok){
+                            res.json().then(function(data){
+                            localStorage.setItem("token",data.token);
+                            _this.user = data.user;
+                            _this.$router.go('/');
+                            window.location.reload();
+                            });
+                        } else {
+                            _this.user = undefined;
+                        }
+                    });
             }
         }
     }

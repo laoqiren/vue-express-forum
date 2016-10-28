@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="initial-scale=1;width=device-width">
+    <style>
+        * {
+            padding:0;
+            margin:0
+        }
+        html,body{
+            width:100%;
+            height:100%;
+        }
+        .container {
+            width:100%;
+            height:100%;
+            flex-wrap:wrap;
+            display:flex;
+            flex-direction:colum;
+        }
+        .head {
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+            width:100%;
+            height:20%;
+            justify-content:center;
+            font-size:25px;
+            color:white;
+            background-color:green;
+        }
+        .main {
+            display:flex;
+            width:100%;
+            height:60%;
+            background-color:white
+        }
+        .nav {
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+            justify-content:center;
+            font-size:25px;
+            color:red;
+            width:15%;
+            height:100%;
+            background-color:yellow;
+        }
+        .content {
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+            justify-content:center;
+            font-size:25px;
+            color:black;
+            width:70%;
+            height:100%;
+        }
+        .foot {
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+            justify-content:center;
+            font-size:25px;
+            color:white;
+            width:100%;
+            height:20%;
+            background-color:red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="head">header</div>
+        <div class="main">
+            <div class="nav">nav</div>
+            <div class="content">content</div>
+        </div>
+        <div class="foot">
+            footer
+        </div>
+    </div>
+</body>
+</html>

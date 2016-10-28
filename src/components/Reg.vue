@@ -24,16 +24,28 @@
         methods:{
             handleReg(){
                 let that = this;
-                $.ajax({
-                    type:'POST',
-                    url:'reg',
-                    data:{
+                let content = JSON.stringify({
                         name:that.name,
                         password:that.password
-                    }
-                }).done(function(res){
-                    localStorage.setItem("token",res.token);
-                });
+                    })
+                fetch('/reg',{
+                    method:'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Content-Length": content.length.toString(),
+                    },
+                    body: content
+                    }).then(function(res){
+                        if(res.ok){
+                            res.json().then(function(data){
+                                localStorage.setItem("token",data.token);
+                                that.$router.go('/');
+                                window.location.reload();
+                            });
+                        } else {
+                            that.user = undefined;
+                        }
+                    });
             }
         }
     }

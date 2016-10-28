@@ -7,7 +7,7 @@
         <li v-if="user"><a v-link="'/post'">发表文章</a></li>
         <li v-if="!user"><a v-link="'/reg'">注册</a></li>
         <li v-if="!user"><a v-link="'/log'">登录</a></li>
-        <li v-if="user"><a href="/logout">退出登录</a></li>
+        <li v-if="user"><a href="/logout" @click="logOut">退出登录</a></li>
       </ul>
     </div>
     <router-view></router-view>
@@ -21,22 +21,42 @@
     created(){
       var token = localStorage.getItem("token");
       var _this = this;
-      if(token){
-        $.ajax({
-          url:'http://localhost:3000/user',
-          type:'POST',
-          data:{
+      var content = JSON.stringify({
             access_token:token
+          })
+      if(token){
+        fetch('http://localhost:3000/user',{
+          method:'POST',
+          headers: {
+                      "Content-Type": "application/json",
+                      "Content-Length": content.length.toString(),
+                    },
+          body: content
+        }).then(function(res){
+          if(res.ok){
+            res.json().then(function(data){
+              console.log(data.user.name);
+              _this.user = data.user;
+            });
+          } else {
+            _this.user = undefined;
           }
-        }).done(function(res){
-          console.log(res.user.name);
-          _this.user = res.user;
-        })
+        });
+      } else {
+        this.user = undefined;
       }
     },
     data(){
       return {
         user:undefined
+      }
+    },
+    methods:{
+      logOut(e){
+        e.preventDefault();
+        localStorage.removeItem("token");
+        this.$router.go("/");
+        window.location.reload();
       }
     }
   }
