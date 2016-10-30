@@ -1,19 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var Post = require('../models/post');
-var moment = require('moment');
 var jwt = require("jwt-simple");
+
 
 router.get('/',function(req,res,next){
     Post.get(function(err,posts){
+        console.log("我来了");
         if(err){
             res.status(404);
             res.end();
+            return;
+        } else {
+            console.log(posts);
+            res.status(200);
+            res.json({
+                posts:posts
+            });
         }
-        res.status(200);
-        res.json({
-            posts:posts
-        });
     });
 });
 router.post('/',function(req,res,next){
@@ -24,28 +28,34 @@ router.post('/',function(req,res,next){
             if(decoded.exp < Date.now()){
                 console.log("haha")
                 res.end('token expired',401);
+                return;
             }
-            //console.log(decoded)
-             var newPost = new Post({
-                name:decoded.iss,
-                title:req.body.title,
-                content:req.body.content
-            });
-            console.log(newPost);
-            newPost.save(function(err,post){
-                if(err){
-                    console.log("发表文章失败");
-                    res.status(500);
-                    res.send({error:1});
-                }
-                console.log('发表文章成功');
-            });
-            res.status(200);
-            res.send({});
-        } catch(err){
-            res.status(401);
-            res.send('no token');
+        }catch(err){
+            res.send(401);
+            res.end();
+            return;
         }
+        var newPost = new Post({
+            name:decoded.iss,
+            title:req.body.title,
+            content:req.body.content
+        });
+        console.log(newPost);
+        newPost.save(function(err,post){
+            if(err){
+                console.log("发表文章失败");
+                res.status(500);
+                res.send({error:1});
+            } else {
+                console.log('发表文章成功');
+                res.status(200);
+                res.end();
+            }
+            //console.log(post);
+        });
+    } else{
+        res.status(401);
+        res.end();
     }
 });
 module.exports = router;

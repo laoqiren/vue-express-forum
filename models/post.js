@@ -37,6 +37,7 @@ Post.prototype.save = function(callback){
                     mongodb.close();
                     return callback(err);
                 }
+                mongodb.close();
                 console.log("文章成功保存到数据库");
                 callback(null,post);
             });
@@ -63,6 +64,7 @@ Post.get = function(callback) {
         if (err) {
           return callback(err);//失败！返回 err
         }
+        //console.log(docs)
         return callback(null,docs);//成功！以数组形式返回查询的结果
       });
     });

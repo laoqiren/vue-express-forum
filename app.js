@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var logout = require('./routes/logout');
 var reg = require('./routes/reg');
 var post = require('./routes/post');
+//var posts = require('./routes/users');
 var user = require("./routes/user");
 
 var app = express();
@@ -56,7 +57,7 @@ app.use('/reg',reg);
 app.use('/log',log);
 //app.use('/logout',logout);
 app.use('/post',post);
-
+//app.use('/posts',posts);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

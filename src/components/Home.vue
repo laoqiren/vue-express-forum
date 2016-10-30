@@ -15,7 +15,8 @@
         created(){
             let _this = this;
              fetch('http://localhost:3000/post',{
-                    method:'GET'
+                    method:'GET',
+                    cache:'no-cache'
                     }).then(function(res){
                         if(res.ok){
                             res.json().then(function(data){

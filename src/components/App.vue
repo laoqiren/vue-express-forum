@@ -4,19 +4,20 @@
         <h1>多人自由论坛</h1>
         <p class="user" v-if="user">用户:<span style="color:white">{{user.name}}</span></p>
       </header>
-      
-    <ul class="nav">
-      <li><a v-link="'/home'">首页</a></li>
-        <li v-if="user"><a v-link="'/post'">发表文章</a></li>
-        <li v-if="!user"><a v-link="'/reg'">注册</a></li>
-        <li v-if="!user"><a v-link="'/log'">登录</a></li>
-        <li v-if="user"><a href="/logout" @click="logOut">退出登录</a></li>
-    </ul>
-    <router-view></router-view>
+      <div id="content">
+        <router-view :exist-user="user"></router-view>
+      </div>
+      <div class="btn-wrap" id="footer">
+          <div class="btn-group btn-group-justified">
+              <a class="btn btn-default" v-link="'/home'"><i class="glyphicon glyphicon-home"></i><br/>首页</a>
+              <a class="btn btn-default show-btn" v-link="'/post'"><i class="glyphicon glyphicon-plus"></i><br/><span v-if="hasNew" class="badge new-icon" >new</span>发表文章</a>
+              <a class="btn btn-default"  v-link="'/my'"><i class="glyphicon glyphicon-tag"></i><br/>我的</a>
+          </div>
+      </div>
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
   header {
     width:100%;
     height:15%;
@@ -26,9 +27,9 @@
     align-items:center;
     flex-wrap:wrap;
     font-weight:bold;
-    color:yellow;
     background-color:#00CD00;
     h1 {
+      color:yellow;
       font-size:1.2em;
     }
     .user {
@@ -36,7 +37,19 @@
     }
   }
   a {
-    text-decoration:none
+    text-decoration:none;
+  }
+  #content {
+    height:75%;
+    overflow:scroll;
+  }
+  #footer {
+    height:10%;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    position:absolute;
+    bottom:0;
   }
 </style>
 <script>
