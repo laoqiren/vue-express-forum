@@ -94,6 +94,14 @@
         this.$router.go("/");
         window.location.reload();
       }
+    },
+    events:{
+      log(user){
+        this.user = user;
+      },
+      logOut(){
+        this.user = undefined;
+      }
     }
   }
 </script>

@@ -20,41 +20,14 @@
     import $ from 'jquery';
 
     export default{
-        created(){
-            var token = localStorage.getItem("token");
-            var _this = this;
-            var content = JSON.stringify({
-                    access_token:token
-                })
-            if(token){
-                fetch('http://localhost:3000/user',{
-                method:'POST',
-                headers: {
-                            "Content-Type": "application/json",
-                            "Content-Length": content.length.toString(),
-                            },
-                body: content
-                }).then(function(res){
-                if(res.ok){
-                    res.json().then(function(data){
-                    console.log(data.user.name);
-                    _this.user = data.user;
-                    });
-                } else {
-                    _this.user = undefined;
-                }
-                });
-            } else {
-                this.user = undefined;
-            }
-        },
         data(){
             return {
                 title:'',
                 content:'',
-                user:undefined
+                user:this.existUser
             }
         },
+        props:["existUser"],
         methods:{
             handlePost(){
                 let _this = this;

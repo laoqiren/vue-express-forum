@@ -12,7 +12,6 @@ router.get('/',function(req,res,next){
             res.end();
             return;
         } else {
-            console.log(posts);
             res.status(200);
             res.json({
                 posts:posts
@@ -26,7 +25,6 @@ router.post('/',function(req,res,next){
         try{
             var decoded = jwt.decode(token,req.app.get('jwtTokenSecret'));
             if(decoded.exp < Date.now()){
-                console.log("haha")
                 res.end('token expired',401);
                 return;
             }

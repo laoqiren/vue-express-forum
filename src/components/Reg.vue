@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form>
+        <form v-if="!user">
             <div class="form-group">
                 <label for="name">用户名
                     <input type="text" id="name" v-model="name" class="form-control"/>
@@ -11,18 +11,20 @@
                 <input type="button" value="注册" class="btn btn-block" @click="handleReg"/>
             </div>
         </form>
+        <p v-else>您已经登录</p>
     </div>
 </template>
 
 <script>
-    import $ from 'jquery';
     export default {
         data(){
             return {
                 name:'',
-                password:''
+                password:'',
+                user:this.existUser
             }
         },
+        props:['existUser'],
         methods:{
             handleReg(){
                 let that = this;
@@ -41,8 +43,10 @@
                         if(res.ok){
                             res.json().then(function(data){
                                 localStorage.setItem("token",data.token);
+                                that.$dispatch("log",{
+                                    name:that.name
+                                });
                                 that.$router.go('/');
-                                window.location.reload();
                             });
                         } else {
                             that.user = undefined;

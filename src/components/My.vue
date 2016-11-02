@@ -29,8 +29,8 @@
             logOut(e){
                 e.preventDefault();
                 localStorage.removeItem("token");
+                this.$dispatch("logOut");
                 this.$router.go("/");
-                window.location.reload();
             }
         }
     }

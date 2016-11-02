@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form>
+        <form v-if="!user">
             <div class="form-group">
                 <label for="name">用户名
                     <input type="text" id="name" class="form-control"  v-model="name"/>
@@ -11,6 +11,7 @@
                 <input type="button" class="btn btn-block" value="登录" @click="handleLog"/>
             </div>
         </form>
+        <p v-else>您已经登录</p>
     </div>
 </template>
 
@@ -20,9 +21,11 @@
         data(){
             return {
                 name:'',
-                password:''
+                password:'',
+                user:this.existUser
             }
         },
+        props:['existUser'],
         methods:{
             handleLog(){
                 let _this = this;
@@ -42,8 +45,8 @@
                             res.json().then(function(data){
                             localStorage.setItem("token",data.token);
                             _this.user = data.user;
+                            _this.$dispatch('log',data.user);
                             _this.$router.go('/');
-                            window.location.reload();
                             });
                         } else {
                             _this.user = undefined;

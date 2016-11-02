@@ -10,7 +10,7 @@ router.post('/',function(req,res,next){
     console.log('提交注册了');
     var name = req.body.name;
     var password = req.body.password;
-    console.log(name,password)
+    console.log(name,password);
     var md5 = crypto.createHash('md5');
     password = md5.update(password).digest('hex');
 
