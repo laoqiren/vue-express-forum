@@ -13,44 +13,41 @@ router.post('/',function(req,res,next){
     console.log(name,password);
     var md5 = crypto.createHash('md5');
     password = md5.update(password).digest('hex');
-
-    var newUser = new User({
-        name:name,
-        password:password
-    });
-    newUser.get(newUser.name,function(err,user){
+    var userEntity = new User();
+    userEntity.getUser({
+        name:name
+    },function(err,user){
         if(err){
             console.log('err');
+            return res.end();
         }
         if(user){
-            //req.flash("error",'用户已存在');
-            console.log('用户已经存在')
-            //return res.redirect('/reg');
+            console.log('用户已经存在');
+            return res.end();
         }
-        console.log('注册信息正确')
-        newUser.save(function(err,user){
+        console.log('注册信息正确');
+        userEntity.saveUser({
+            name:name,
+            password:password
+        },function(err){
             if(err){
-                console.log('注册失败')
-                //return res.redirect("/")
-                //req.flash("error",'err');
+                console.log('注册失败');
+                return res.end();
             }
             var expires = moment().add(7,'days').valueOf();
             var token = jwt.encode({
-                iss: newUser.name,
+                iss: name,
                 exp: expires
             }, req.app.get('jwtTokenSecret'));
             res.json({
                 token : token,
                 expires: expires,
                 user:{
-                    name:newUser.name
+                    name:name
                 }
                 
             });
-            //req.session.user = newUser;
             console.log('注册完成');
-            //req.flash("succuss","注册成功");
-            //res.redirect('/');
         });
     });
 });

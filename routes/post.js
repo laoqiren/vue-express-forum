@@ -5,12 +5,12 @@ var jwt = require("jwt-simple");
 
 
 router.get('/',function(req,res,next){
-    Post.get(function(err,posts){
+    var postEntity = new Post();
+    postEntity.get(null,function(err,posts){
         console.log("我来了");
         if(err){
             res.status(404);
-            res.end();
-            return;
+            return res.end();
         } else {
             res.status(200);
             res.json({
@@ -33,13 +33,12 @@ router.post('/',function(req,res,next){
             res.end();
             return;
         }
-        var newPost = new Post({
+        var postEntity = new Post();
+        postEntity.savePost({
             name:decoded.iss,
             title:req.body.title,
             content:req.body.content
-        });
-        console.log(newPost);
-        newPost.save(function(err,post){
+        },function(err){
             if(err){
                 console.log("发表文章失败");
                 res.status(500);
@@ -49,7 +48,6 @@ router.post('/',function(req,res,next){
                 res.status(200);
                 res.end();
             }
-            //console.log(post);
         });
     } else{
         res.status(401);

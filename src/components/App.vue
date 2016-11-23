@@ -1,7 +1,7 @@
 <template>
   <div>
       <header>
-        <h1>多人自由论坛</h1>
+        <h1>自由论坛,畅所欲言</h1>
         <p class="user" v-if="user">用户:<span style="color:white">{{user.name}}</span></p>
       </header>
       <div id="content">

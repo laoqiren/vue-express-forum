@@ -5,6 +5,7 @@ var projectRoot = path.resolve(__dirname, '../')
 
 module.exports = {
   entry: {
+    main: ['whatwg-fetch'],
     app: './src/main.js'
   },
   output: {

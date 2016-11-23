@@ -11,18 +11,19 @@ router.post('/',function(req,res,next){
     var password = req.body.password;
     var md5 = crypto.createHash('md5');
     password = md5.update(password).digest('hex');
-    User.prototype.get(name,function(err,user){
+    var userEntity = new User();
+    userEntity.getUser({
+        name:name
+    },function(err,user){
         if(!user){
             console.log('用户不存在');
             res.status(500);
-            res.send({error:1});
-            //return res.redirect('/log');
+            return res.send({error:1});
         }
         if(user.password !== password){
             console.log('登录密码错误');
             res.status(500);
-            res.send({error:2});
-            //return res.redirect('/log');
+            return res.send({error:2});
         }
         var expires = moment().add(7,'days').valueOf();
         var token = jwt.encode({
@@ -38,8 +39,6 @@ router.post('/',function(req,res,next){
                 }
         });
         console.log('登录成功');
-        //req.session.user = user;
-        //res.redirect('/');
-    })
+    });
 });
 module.exports = router;

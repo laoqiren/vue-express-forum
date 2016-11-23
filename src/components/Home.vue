@@ -20,7 +20,7 @@
                     }).then(function(res){
                         if(res.ok){
                             res.json().then(function(data){
-                                _this.posts = data.posts;
+                                _this.posts = data.posts.reverse();
                             });
                         } else {
                            _this.posts = undefined;
