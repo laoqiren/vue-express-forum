@@ -13,7 +13,7 @@ $ npm install
 
 **start express server**
 
-$ set DEBUG=vue-express-forum & npm start
+$DEBUG=vue-express-forum && npm start
 
 **enjoy the app**
 
