@@ -10,7 +10,7 @@ $ npm install
 
 **启动Mongod数据库服务，默认监听27017端口**
 
-> net start mongodb
+$ mongod --dbpath=/var/mongodb/data -fork --logpath /var/mongodb/logs/log.log
 
 **启动服务器**
 
