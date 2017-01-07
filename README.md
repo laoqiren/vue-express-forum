@@ -1,6 +1,7 @@
 # vue-express-forum
 ## 基于vuejs,express,mogodb的多人论坛webapp
 
+**线上地址:(120.77.38.217:3000)[120.77.38.217:3000]**
 ### start app:
 
 **install dependencies& devDependencies**
